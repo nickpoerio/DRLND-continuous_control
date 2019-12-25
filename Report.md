@@ -5,14 +5,14 @@
 
 # Project 2: Continuous Control
 
-For this project I decided to use a DDPG implementation developed to solve the `Pendulum` OpenAI Gym environment, and then trying to improve it, introducing variations like multiagent training and gradient clipping.
+For this project I decided to use a DDPG implementation developed to solve the `Pendulum` OpenAI Gym environment, and then tried to improve it, introducing variations like multiagent training and gradient clipping.
 
 ## Learning Algorithm: DDPG
 
 The Deep Deterministic Policy Gradient algorithm is a particular actor-critic method, where the critic is a neural network used to estimate the action value function  Q(s,a) and the actor mu(a) is another neural network that outputs the action maximizing Q. Hence, the training process evolves alternating the following steps:   
 
 - training the Q network, minimizing the temporal difference error, with the actor network parameters fixed.
-- training the actor nework mu, maximizing Q(s,mu(s,a)), with the Q network parameter fixed
+- training the actor nework mu, maximizing Q(s,mu(s,a)), with the Q network parameter fixed.
 
 The high affinity with the DQN algorithm allows to use also the following improvements:
 
@@ -23,8 +23,8 @@ The training step has been performed once per timestep, that is, once every 20 e
 
 For exploration, I used the Ornstein-Uhlebeck noise, using a Gaussian sampling.
 
-The actor neural network takes the state as input consists of 3 fully connected layers, with relu activations for the first 2 (hidden) and a tanh activation for the output (which in fact should be in the range (-1,1)).  
-The actor neural network consists of 3 fully connected layers, with relu activations for the first 2 (hidden) and a linear activation for the output. The first input, the state, is taken by the fist layer, while the second one, the action, is taken by the second layer together with the ouptut of the first one.
+The actor neural network takes the state as input consists of 3 fully connected layers, with relu activations for the first 2 layers (hidden) and a tanh activation for the output (which in fact should be in the range (-1,1)).  
+The actor neural network consists of 3 fully connected layers, with relu activations for the first 2 layers (hidden) and a linear activation for the output. The first input, the state, is taken by the fist layer, while the second one, the action, is taken by the second layer together with the output of the first one.
 
 The hyperparameters used are:
 
@@ -38,12 +38,24 @@ The hyperparameters used are:
 The reward history during training is shown in the following picture:
 
 ![DDPG_trained][image1]
-# learning rate of the actor 
+ 
 that is also visible in the `Continuous_Control.ipynb` file together with a verbose logging of average rewards over the last 100 steps: it has taken 289 episodes to solve the problem, that is, in order to get an average reward greater than 30. The related weight files are `checkpoint_actor.pth` and `checkpoint_critic.pth`.
 
 
 ## Possible improvements
 
-The
+The environment has been solved in a quite satisfactory fashion with the multiagent DDPG algorithm, nevertheless, for the future, I'd like to get a better understanding of the influence of some hyperparameters on the learning stability and speed, with particular attention on:   
+
+- learning steps frequency
+- batch size
+- soft update rate
+
+In addition, I'd like to evaluate a different exploration policy, like a variational approach on networks parameters, which should lead to a more consistent exploration.
+
+Last but not least, I'd like to compare the performance of my improved DDPG with:
+
+- PPO
+- A3C
+- Evolutionary strategy
 
 
